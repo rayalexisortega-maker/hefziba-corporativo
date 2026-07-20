@@ -54,7 +54,9 @@ a{color:inherit;text-decoration:none}
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
 h1,h2,h3{font-family:var(--font-d);font-weight:600;line-height:1.12;letter-spacing:-.02em}
 .accent{font-family:var(--font-d);font-style:italic;font-weight:700}
-.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+/* padding-right evita que la itálica se corte: el glifo sobresale del ancho de avance */
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+  display:inline-block;padding-right:.14em;margin-right:-.1em}
 
 /* ============ FONDO: AURORA + GRANO ============ */
 .sky{position:fixed;inset:0;z-index:-2;background:radial-gradient(120% 90% at 50% 0%,var(--bg-2) 0%,var(--bg) 60%)}
@@ -160,13 +162,13 @@ section{position:relative;padding:110px 0;z-index:2}
 @keyframes hrise{to{transform:none}}
 .hero .lead{margin:26px 0 36px;font-size:1.08rem;font-weight:300}
 .hero-ctas{display:flex;flex-wrap:wrap;gap:16px}
-.hero-chips{display:flex;flex-wrap:wrap;gap:12px;margin-top:44px}
+.hero-chips{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;width:100%}
 .chip{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;font-size:.8rem;color:var(--ink-soft);
   background:var(--glass);border:1px solid var(--glass-line-soft);backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur))}
 .chip svg{color:var(--sky)}
 
 /* tarjeta flotante hero */
-.hero-visual{position:relative;display:flex;justify-content:center;width:100%;max-width:620px;margin-inline:auto}
+.hero-visual{position:relative;display:flex;flex-direction:column;align-items:center;gap:22px;width:100%;max-width:620px;margin-inline:auto}
 .halo{position:absolute;inset:8%;border-radius:50%;background:conic-gradient(from 0deg,#38bdf8,#3b82f6,#6366f1,#38bdf8);
   filter:blur(46px);opacity:.35;animation:spin 14s linear infinite}
 @keyframes spin{to{transform:rotate(1turn)}}
@@ -244,7 +246,7 @@ section{position:relative;padding:110px 0;z-index:2}
 .point span{color:var(--ink-soft);font-weight:300}
 
 /* ============ MISIÓN / VISIÓN / VALORES ============ */
-.mvv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:56px;align-items:start}
+.mvv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:56px;align-items:stretch}
 .mvv-card{position:relative;padding:38px 30px;border-radius:var(--r-md);overflow:hidden;
   transition:transform .5s var(--ease),border-color .4s}
 .mvv-card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--grad)}
@@ -261,11 +263,18 @@ section{position:relative;padding:110px 0;z-index:2}
 .mvv-card h3{font-size:1.5rem;margin-bottom:12px}
 .mvv-card p{font-size:.94rem;color:var(--ink-soft);font-weight:300}
 .mvv-card strong{color:var(--ink);font-weight:600}
-.mvv-values{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
-.mvv-values li{padding:7px 14px;border-radius:999px;font-size:.78rem;font-weight:500;color:#bfdbfe;
-  background:rgba(56,189,248,.09);border:1px solid rgba(56,189,248,.24);
-  transition:transform .3s var(--ease),background .3s}
-.mvv-values li:hover{transform:translateY(-2px);background:rgba(56,189,248,.16)}
+/* Nube de valores flotante bajo las tarjetas */
+.values-cloud{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:38px}
+.values-cloud li{padding:11px 22px;border-radius:999px;font-size:.9rem;font-weight:500;color:#bfdbfe;
+  background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.24);
+  backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur));
+  opacity:0;transform:translateY(18px) scale(.9);
+  transition:opacity .6s var(--ease),transform .6s var(--ease),background .3s,border-color .3s;
+  transition-delay:calc(var(--i) * 90ms)}
+.values-cloud.in li{opacity:1;transform:none;animation:vfloat 6s ease-in-out infinite;
+  animation-delay:calc(var(--i) * 320ms)}
+@keyframes vfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.values-cloud li:hover{background:rgba(56,189,248,.18);border-color:rgba(56,189,248,.5)}
 
 /* ============ SERVICIOS ============ */
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:56px}
@@ -499,11 +508,6 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset
         </a>
         <a class="btn btn-ghost" href="#servicios" data-magnetic>Conoce Hefzi-bá</a>
       </div>
-      <div class="hero-chips">
-        <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M17 6.5c0-1.9-2.2-3-5-3s-5 1.1-5 3 1.8 2.6 5 3.2 5 1.5 5 3.3-2.2 3-5 3-5-1.1-5-3"/></svg> Sueldo semanal + bonos</span>
-        <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg> Plan de crecimiento real</span>
-        <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9.5" r="2.6"/><path d="M3 20c0-3.2 2.7-5 6-5s6 1.8 6 5M14.5 15.4c2.8.2 5 1.8 5 4.6"/></svg> Ambiente que impulsa</span>
-      </div>
     </div>
 
     <div class="hero-visual">
@@ -527,6 +531,11 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset
           <span>Agrega <code>assets/img/equipo-1.jpg</code>, <code>equipo-2.jpg</code>…</span>
         </div>
         <div class="team-dots" role="tablist" aria-label="Fotos del equipo"></div>
+      </div>
+      <div class="hero-chips">
+        <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M17 6.5c0-1.9-2.2-3-5-3s-5 1.1-5 3 1.8 2.6 5 3.2 5 1.5 5 3.3-2.2 3-5 3-5-1.1-5-3"/></svg> Sueldo semanal + bonos</span>
+        <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg> Plan de crecimiento real</span>
+        <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9.5" r="2.6"/><path d="M3 20c0-3.2 2.7-5 6-5s6 1.8 6 5M14.5 15.4c2.8.2 5 1.8 5 4.6"/></svg> Ambiente que impulsa</span>
       </div>
     </div>
   </div>
@@ -606,12 +615,20 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset
         <div class="mvv-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5.5c0 4.3-2.9 7.7-7 9.5-4.1-1.8-7-5.2-7-9.5V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
         <h3>Valores</h3>
         <p>No solo definen lo que hacemos, sino la manera en la que impactamos y nos relacionamos con los demás dentro del Corporativo.</p>
-        <ul class="mvv-values">
-          <li>Tiempo</li><li>Ambición</li><li>Abundancia</li><li>Apalancamiento</li>
-          <li>Aglomerar</li><li>Conocimiento</li><li>Energía</li><li>Intercambio</li>
-        </ul>
       </article>
     </div>
+
+    <!-- Los 8 valores flotan bajo las tarjetas y aparecen escalonados -->
+    <ul class="values-cloud" id="valuesCloud" aria-label="Nuestros valores">
+      <li style="--i:0">Tiempo</li>
+      <li style="--i:1">Ambición</li>
+      <li style="--i:2">Abundancia</li>
+      <li style="--i:3">Apalancamiento</li>
+      <li style="--i:4">Aglomerar</li>
+      <li style="--i:5">Conocimiento</li>
+      <li style="--i:6">Energía</li>
+      <li style="--i:7">Intercambio</li>
+    </ul>
   </div>
 </section>
 
@@ -998,6 +1015,17 @@ document.querySelectorAll(".t-arrow").forEach(function(b){
   b.addEventListener("click", function(){ show(current + +b.dataset.dir); auto(); });
 });
 auto();
+
+/* Nube de valores: aparición escalonada al entrar en pantalla */
+var cloud = document.getElementById("valuesCloud");
+if(cloud){
+  if(reduced){ cloud.classList.add("in"); }
+  else{
+    new IntersectionObserver(function(es, o){
+      es.forEach(function(e){ if(e.isIntersecting){ cloud.classList.add("in"); o.disconnect(); } });
+    },{threshold:.3}).observe(cloud);
+  }
+}
 
 /* Carrusel del equipo: descarta las fotos que no existan y rota las disponibles */
 (function(){
