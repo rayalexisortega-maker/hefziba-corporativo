@@ -176,6 +176,15 @@ section{position:relative;padding:110px 0;z-index:2}
   box-shadow:0 24px 70px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.1)}
 .hero-card{width:min(360px,100%);padding:38px 32px;text-align:center;animation:float 7s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0) rotate(-1.2deg)}50%{transform:translateY(-16px) rotate(1.2deg)}}
+/* Foto del equipo en el hero */
+.hero-photo{width:min(420px,100%);margin:0;padding:10px;overflow:hidden;animation:float 7s ease-in-out infinite}
+.hero-photo img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:20px;display:block}
+.photo-empty{aspect-ratio:4/5;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  text-align:center;color:var(--ink-mute);background:linear-gradient(160deg,rgba(56,189,248,.1),rgba(99,102,241,.08));
+  border:1px dashed var(--glass-line)}
+.photo-empty b{font-family:var(--font-d);font-size:1rem;color:var(--ink-soft)}
+.photo-empty span{font-size:.78rem}
+.photo-empty code{font-size:.74rem;color:var(--sky)}
 .hero-card .mark{width:86px;height:86px;margin:0 auto 20px;border-radius:26px;display:grid;place-items:center;
   background:var(--grad);animation:breathe 5s ease-in-out infinite}
 @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
@@ -223,12 +232,41 @@ section{position:relative;padding:110px 0;z-index:2}
   66%{border-radius:55% 45% 60% 40%/40% 60% 45% 55%;transform:rotate(-4deg)}}
 .about-card{position:relative;width:82%;padding:36px;border-radius:var(--r-lg)}
 .about-card blockquote{font-family:var(--font-d);font-weight:500;font-size:1.3rem;line-height:1.5;color:var(--ink)}
+/* Rotador de frases (cambio lento) */
+.phrase-stage{position:relative;display:grid}
+.phrase{grid-area:1/1;opacity:0;transform:translateY(14px);pointer-events:none;
+  transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.phrase.active{opacity:1;transform:none;pointer-events:auto}
 .about-card cite{display:block;margin-top:16px;font-family:var(--font-b);font-style:normal;font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-mute)}
 .about-points{margin-top:30px;display:grid;gap:14px}
 .point{display:flex;gap:14px;align-items:flex-start}
 .point svg{flex:none;margin-top:5px;color:var(--sky)}
 .point strong{font-weight:600}
 .point span{color:var(--ink-soft);font-weight:300}
+
+/* ============ MISIÓN / VISIÓN / VALORES ============ */
+.mvv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:56px;align-items:start}
+.mvv-card{position:relative;padding:38px 30px;border-radius:var(--r-md);overflow:hidden;
+  transition:transform .5s var(--ease),border-color .4s}
+.mvv-card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--grad)}
+.mvv-card::after{content:"";position:absolute;inset:0;border-radius:inherit;opacity:0;transition:opacity .4s;pointer-events:none;
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(59,130,246,.16),transparent 60%)}
+.mvv-card:hover::after{opacity:1}
+.mvv-card:hover{border-color:rgba(59,130,246,.45)}
+.mvv-num{position:absolute;top:22px;right:26px;font-family:var(--font-d);font-weight:700;font-size:2.6rem;
+  line-height:1;color:rgba(148,180,255,.09)}
+.mvv-icon{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;margin-bottom:20px;
+  background:linear-gradient(135deg,rgba(56,189,248,.2),rgba(99,102,241,.16));
+  border:1px solid var(--glass-line);color:#bfdbfe;transition:transform .5s var(--ease)}
+.mvv-card:hover .mvv-icon{transform:scale(1.1) rotate(-6deg)}
+.mvv-card h3{font-size:1.5rem;margin-bottom:12px}
+.mvv-card p{font-size:.94rem;color:var(--ink-soft);font-weight:300}
+.mvv-card strong{color:var(--ink);font-weight:600}
+.mvv-values{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.mvv-values li{padding:7px 14px;border-radius:999px;font-size:.78rem;font-weight:500;color:#bfdbfe;
+  background:rgba(56,189,248,.09);border:1px solid rgba(56,189,248,.24);
+  transition:transform .3s var(--ease),background .3s}
+.mvv-values li:hover{transform:translateY(-2px);background:rgba(56,189,248,.16)}
 
 /* ============ SERVICIOS ============ */
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:56px}
@@ -357,7 +395,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset
   .hero-grid{grid-template-columns:1fr;gap:70px}
   .hero-visual{order:2}
   .about-grid{grid-template-columns:1fr}
-  .cards,.v-cards{grid-template-columns:1fr 1fr}
+  .cards,.v-cards,.mvv-grid{grid-template-columns:1fr 1fr}
   .stats-panel{grid-template-columns:1fr 1fr}
   .stat:nth-child(2){border-right:none}
   .stat:nth-child(-n+2){border-bottom:1px solid var(--glass-line-soft)}
@@ -367,7 +405,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset
   section{padding:80px 0}
   .nav-links,.nav-cta{display:none}
   .burger{display:flex}
-  .cards,.v-cards{grid-template-columns:1fr}
+  .cards,.v-cards,.mvv-grid{grid-template-columns:1fr}
   .mc-1{left:0}.mc-2{right:0}
   .cta-panel{padding:60px 24px}
   .foot-grid{grid-template-columns:1fr}
@@ -471,16 +509,16 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset
 
     <div class="hero-visual">
       <div class="halo" aria-hidden="true"></div>
-      <div class="glass-card hero-card" data-tilt>
-        <!-- Tu logo. Si falta el archivo, cae al monograma + texto. -->
-        <img class="hero-logo" src="assets/logo/logo.png" alt="Hefzi-bá Corporativo" onerror="this.style.display='none';this.nextElementSibling.style.display=''">
-        <div class="hero-fallback" style="display:none">
-          <div class="mark" aria-hidden="true"><svg width="42" height="42" viewBox="0 0 34 34" fill="none"><path d="M11 7v20M23 7v20M11 17h12" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div>
-          <h3>HEFZI-BÁ</h3>
-          <p>Corporativo</p>
+      <!-- Foto del equipo: coloca assets/img/equipo.jpg (prueba .jpg, luego .png). -->
+      <figure class="glass-card hero-photo" data-tilt>
+        <img src="assets/img/equipo.jpg" alt="Equipo de Hefzi-bá Corporativo"
+             onerror="if(this.src.slice(-4)==='.jpg'){this.src='assets/img/equipo.png'}else{this.style.display='none';this.nextElementSibling.style.display=''}">
+        <div class="photo-empty" style="display:none">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9.5" r="2.6"/><path d="M3 20c0-3.2 2.7-5 6-5s6 1.8 6 5M14.5 15.4c2.8.2 5 1.8 5 4.6"/></svg>
+          <b>Foto del equipo</b>
+          <span>Agrega <code>assets/img/equipo.jpg</code></span>
         </div>
-        <div class="verse">Marketing · Ventas · Reclutamiento<br>Formamos líderes con visión empresarial.</div>
-      </div>
+      </figure>
       <div class="mini-chip mc-1">Vacantes abiertas<br><small>postúlate hoy</small></div>
       <div class="mini-chip mc-2">$1,500 semanales<br><small>+ bonos y comisiones</small></div>
     </div>
@@ -521,9 +559,52 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset
     <div class="about-blob reveal" data-d="2">
       <div class="blob" aria-hidden="true"></div>
       <div class="glass-card about-card" data-tilt>
-        <blockquote>“No contratamos empleados: formamos líderes con visión empresarial.”</blockquote>
+        <div class="phrase-stage">
+          <blockquote class="phrase active">“No contratamos empleados: formamos líderes con visión empresarial.”</blockquote>
+          <blockquote class="phrase">“Tu crecimiento no depende de tu antigüedad, depende de tus resultados.”</blockquote>
+          <blockquote class="phrase">“Formamos personas con visión empresarial: pensamiento estratégico y práctica en campo real.”</blockquote>
+          <blockquote class="phrase">“Aquí no consigues un empleo: construyes una carrera.”</blockquote>
+          <blockquote class="phrase">“Los resultados extraordinarios son ordinarios repetidos con constancia.”</blockquote>
+          <blockquote class="phrase">“Un líder no crea seguidores: crea más líderes.”</blockquote>
+        </div>
         <cite>— Filosofía Hefzi-bá</cite>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MISIÓN / VISIÓN / VALORES ============ -->
+<section id="mvv">
+  <div class="wrap">
+    <div class="reveal" style="text-align:center;max-width:640px;margin-inline:auto">
+      <span class="kicker" style="justify-content:center">Quiénes somos</span>
+      <h2 class="h2">Lo que nos <em class="accent grad-text">mueve</em></h2>
+    </div>
+    <div class="mvv-grid">
+      <article class="glass-card mvv-card mvv-mision reveal" data-d="1" data-tilt>
+        <span class="mvv-num" aria-hidden="true">01</span>
+        <div class="mvv-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/></svg></div>
+        <h3>Misión</h3>
+        <p>Formar personas con visión empresarial a través de pensamiento estratégico, práctica en campo laboral y preparación continua, impulsando su <strong>Proyección Profesional y Financiera</strong>.</p>
+      </article>
+
+      <article class="glass-card mvv-card mvv-vision reveal" data-d="2" data-tilt>
+        <span class="mvv-num" aria-hidden="true">02</span>
+        <div class="mvv-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h3>Visión</h3>
+        <p>Ser una <strong>Escuela Inteligente de Negocios</strong> reconocida por impulsar talento emprendedor, construir equipos de alto desempeño y generar <strong>impacto Empresarial Sostenible</strong>.</p>
+      </article>
+
+      <article class="glass-card mvv-card mvv-valores reveal" data-d="3" data-tilt>
+        <span class="mvv-num" aria-hidden="true">03</span>
+        <div class="mvv-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5.5c0 4.3-2.9 7.7-7 9.5-4.1-1.8-7-5.2-7-9.5V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3>Valores</h3>
+        <p>No solo definen lo que hacemos, sino la manera en la que impactamos y nos relacionamos con los demás dentro del Corporativo.</p>
+        <ul class="mvv-values">
+          <li>Tiempo</li><li>Ambición</li><li>Abundancia</li><li>Apalancamiento</li>
+          <li>Aglomerar</li><li>Conocimiento</li><li>Energía</li><li>Intercambio</li>
+        </ul>
+      </article>
     </div>
   </div>
 </section>
@@ -772,6 +853,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset
         <h4>Explora</h4>
         <ul>
           <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#mvv">Misión y Valores</a></li>
           <li><a href="#servicios">Servicios</a></li>
           <li><a href="#metodo">Método</a></li>
           <li><a href="#vacantes">Vacantes</a></li>
@@ -910,6 +992,17 @@ document.querySelectorAll(".t-arrow").forEach(function(b){
   b.addEventListener("click", function(){ show(current + +b.dataset.dir); auto(); });
 });
 auto();
+
+/* Rotador de frases de filosofía (lento: 9s) */
+var phrases = [].slice.call(document.querySelectorAll(".phrase"));
+if(phrases.length > 1 && !reduced){
+  var pi = 0;
+  setInterval(function(){
+    phrases[pi].classList.remove("active");
+    pi = (pi + 1) % phrases.length;
+    phrases[pi].classList.add("active");
+  }, 9000);
+}
 
 /* FAQ acordeón */
 document.querySelectorAll(".faq-item").forEach(function(item){
