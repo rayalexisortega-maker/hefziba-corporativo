@@ -26,6 +26,7 @@ assets/
 | `logo/isotipo.svg` **o** `isotipo.png` | **Navbar y footer** | Solo el símbolo "H", cuadrado, **fondo transparente**. La página prueba `.svg`, luego `.png`, y si no existe usa el monograma azul temporal. |
 | `favicon/favicon.png` | Pestaña del navegador | Cuadrado, recorte del símbolo, legible en 16 px. (Hoy usa `logo.png`.) |
 | `social/og-image.jpg` | Vista previa al compartir link | 1200×630 px, con logo + tagline. |
+| `img/equipo-1.jpg` … `equipo-8.jpg` | **Carrusel del hero** | Fotos del equipo. Nómbralas en orden; las que no existan se descartan solas. Horizontal 5:4 se ve mejor. |
 
 ## Notas
 
