@@ -98,7 +98,7 @@ h1,h2,h3{font-family:var(--font-d);font-weight:600;line-height:1.12;letter-spaci
 @keyframes lrise{to{opacity:1;transform:none}}
 
 /* ============ NAV ============ */
-.nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:110;
+.nav{position:absolute;top:16px;left:50%;transform:translateX(-50%);z-index:110;
   width:min(1120px,calc(100% - 32px));
   display:flex;align-items:center;justify-content:space-between;gap:16px;
   padding:12px 22px;border-radius:999px;
@@ -318,27 +318,34 @@ section{position:relative;padding:110px 0;z-index:2}
 .peak-pin[data-b="3"] span{background:linear-gradient(160deg,#7dd3fc,#38bdf8)}
 .peak-pin[data-b="2"] span{background:linear-gradient(160deg,#3b82f6,#2563eb)}
 .peak-pin[data-b="1"] span{background:linear-gradient(160deg,#2563eb,#1e3a8a)}
-/* pelotita subiendo los escalones en loop */
-.peak-ball{position:absolute;width:22px;height:22px;border-radius:50%;z-index:3;
+/* pelota que rebota subiendo los escalones (arcos) + estela */
+.peak-ball,.peak-trail{position:absolute;left:86%;top:71%;border-radius:50%;
+  transform:translate(-50%,-50%);will-change:left,top,transform;
+  animation:ballbounce 5.6s linear infinite}
+.peak-ball{width:22px;height:22px;z-index:3;
   background:radial-gradient(circle at 32% 30%,#fff 0%,#7dd3fc 45%,#2563eb 100%);
-  box-shadow:0 0 18px rgba(56,189,248,.9),0 4px 8px rgba(0,0,0,.4);
-  transform:translate(-50%,-50%);left:88%;top:74%;
-  animation:ballclimb 6.5s cubic-bezier(.5,0,.5,1) infinite}
-@keyframes ballclimb{
-  0%   {left:88%; top:74%; opacity:0}
-  6%   {opacity:1}
-  16%  {left:76%; top:65%}                 /* escalón 01 */
-  22%  {left:74.5%; top:59.5%}             /* sube contra-escalón */
-  34%  {left:70%; top:51%}                 /* escalón 02 */
-  40%  {left:66%; top:45%}
-  52%  {left:61%; top:37%}                 /* escalón 03 */
-  58%  {left:57%; top:31%}
-  72%  {left:54%; top:23%}                 /* cima 04 */
-  84%  {left:54%; top:23%; opacity:1}      /* pausa en la cima */
-  92%  {left:54%; top:23%; opacity:0}      /* desvanece */
-  100% {left:88%; top:74%; opacity:0}      /* regresa a la base */
+  box-shadow:0 0 18px rgba(56,189,248,.9),0 4px 8px rgba(0,0,0,.4)}
+.peak-trail{z-index:2;background:radial-gradient(circle at 35% 32%,#bae6fd,#38bdf8 70%);box-shadow:0 0 12px rgba(56,189,248,.6)}
+.peak-trail.t1{width:16px;height:16px;filter:opacity(.55) blur(.4px);animation-delay:.09s}
+.peak-trail.t2{width:13px;height:13px;filter:opacity(.32) blur(1px);animation-delay:.18s}
+.peak-trail.t3{width:10px;height:10px;filter:opacity(.16) blur(1.6px);animation-delay:.27s}
+@keyframes ballbounce{
+  0%   {left:86%;top:71%;opacity:0;transform:translate(-50%,-50%) scale(1.12,.78);animation-timing-function:cubic-bezier(.22,.55,.4,1)}
+  5%   {opacity:1}
+  10%  {left:80%;top:54%;transform:translate(-50%,-50%) scale(.9,1.16);animation-timing-function:cubic-bezier(.6,0,.9,.45)}   /* apex 1 */
+  18%  {left:74%;top:64%;transform:translate(-50%,-50%) scale(1.14,.8);animation-timing-function:cubic-bezier(.22,.55,.4,1)}   /* escalón 01 */
+  26%  {left:70.5%;top:43%;transform:translate(-50%,-50%) scale(.9,1.14);animation-timing-function:cubic-bezier(.6,0,.9,.45)}  /* apex 2 */
+  34%  {left:67%;top:51%;transform:translate(-50%,-50%) scale(1.14,.82);animation-timing-function:cubic-bezier(.22,.55,.4,1)}  /* escalón 02 */
+  42%  {left:63.5%;top:29%;transform:translate(-50%,-50%) scale(.9,1.14);animation-timing-function:cubic-bezier(.6,0,.9,.45)}  /* apex 3 */
+  50%  {left:60%;top:37%;transform:translate(-50%,-50%) scale(1.14,.82);animation-timing-function:cubic-bezier(.22,.55,.4,1)}  /* escalón 03 */
+  58%  {left:57%;top:16%;transform:translate(-50%,-50%) scale(.92,1.12);animation-timing-function:cubic-bezier(.6,0,.9,.45)}   /* apex 4 */
+  66%  {left:54%;top:24%;transform:translate(-50%,-50%) scale(1.12,.85);opacity:1}                                             /* cima 04 */
+  72%  {left:54%;top:23%;transform:translate(-50%,-50%) scale(1,1)}                                                            /* asienta */
+  84%  {left:54%;top:23%;opacity:1}
+  92%  {left:54%;top:23%;opacity:0}
+  100% {left:86%;top:71%;opacity:0}
 }
-@media(prefers-reduced-motion:reduce){.peak-ball{display:none}}
+@media(prefers-reduced-motion:reduce){.peak-ball,.peak-trail{display:none}}
 /* lista de pilares (solo móvil) */
 .peak-list{display:none;list-style:none;margin:28px auto 0;padding:0;gap:12px}
 .peak-list li{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:var(--r-md);
@@ -744,7 +751,10 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset
       <!-- TU IMAGEN: assets/img/metodo.png (prueba .png y .jpg) -->
       <img class="peak-img" src="assets/img/metodo.png" alt="Ruta de crecimiento Hefzi-bá"
            onerror="if(this.src.endsWith('.png'))this.src=this.src.slice(0,-4)+'.jpg'">
-      <!-- pelotita que sube los escalones en loop -->
+      <!-- pelotita que rebota subiendo los escalones, con estela -->
+      <span class="peak-trail t3" aria-hidden="true"></span>
+      <span class="peak-trail t2" aria-hidden="true"></span>
+      <span class="peak-trail t1" aria-hidden="true"></span>
       <span class="peak-ball" aria-hidden="true"></span>
       <!-- puntos sobre los escalones (coordenadas en % de la imagen) -->
       <div class="peak-pin" style="--x:76%;--y:63%"  data-b="1"><span>01</span><b>Actitud</b></div>
