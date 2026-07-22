@@ -294,41 +294,62 @@ section{position:relative;padding:110px 0;z-index:2}
 .p-card .more svg{transition:transform .3s var(--ease)}
 .p-card:hover .more svg{transform:translateX(5px)}
 
-/* ============ MÉTODO / PIRÁMIDE ============ */
-.peak{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center;margin-top:60px}
-.peak-graphic{position:relative}
-.peak-svg{width:100%;height:auto;overflow:visible;filter:drop-shadow(0 30px 60px rgba(37,99,235,.28))}
-.pk-band{transform-origin:200px 300px;opacity:0;transform:translateY(24px) scale(.96);
-  transition:opacity .7s var(--ease),transform .7s var(--ease)}
-.peak.in .pk-band{opacity:1;transform:none}
-.peak.in .pk-b1{transition-delay:.05s}.peak.in .pk-b2{transition-delay:.2s}
-.peak.in .pk-b3{transition-delay:.35s}.peak.in .pk-b4{transition-delay:.5s}
-.pk-num{fill:#fff;font-family:var(--font-d);font-weight:700;font-size:20px;text-anchor:middle;
-  opacity:0;transition:opacity .5s ease .55s}
-.pk-num-top{font-size:17px}
-.peak.in .pk-num{opacity:.96}
-.pk-flag{opacity:0;transform-box:fill-box;transform-origin:bottom;transform:scaleY(0);transform-origin:200px 30px;
-  transition:opacity .4s ease .9s,transform .5s var(--ease) .9s}
-.peak.in .pk-flag{opacity:1;transform:none;animation:flagwave 3s ease-in-out 1.4s infinite}
-@keyframes flagwave{0%,100%{transform:rotate(0)}50%{transform:rotate(-4deg)}}
-
-.peak-steps{list-style:none;display:grid;gap:14px;margin:0;padding:0}
-.peak-step{position:relative;display:grid;grid-template-columns:52px 1fr;gap:18px;align-items:start;
-  padding:16px 18px;border-radius:var(--r-md);
-  background:var(--glass);border:1px solid var(--glass-line-soft);
-  opacity:0;transform:translateX(24px);
-  transition:opacity .6s var(--ease),transform .6s var(--ease),border-color .3s,background .3s;
-  transition-delay:calc(.15s + var(--i) * .12s)}
-.peak.in .peak-step{opacity:1;transform:none}
-.peak-step:hover{background:var(--glass-strong);border-color:rgba(59,130,246,.4)}
-.ps-badge{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;
-  font-family:var(--font-d);font-weight:700;font-size:1.15rem;color:#fff}
-.ps-badge[data-b="4"]{background:linear-gradient(160deg,#7dd3fc,#38bdf8)}
-.ps-badge[data-b="3"]{background:linear-gradient(160deg,#38bdf8,#3b82f6)}
-.ps-badge[data-b="2"]{background:linear-gradient(160deg,#3b82f6,#2563eb)}
-.ps-badge[data-b="1"]{background:linear-gradient(160deg,#2563eb,#1e3a8a)}
-.peak-step h3{font-size:1.2rem;margin-bottom:4px}
-.peak-step p{color:var(--ink-soft);font-weight:300;font-size:.92rem}
+/* ============ MÉTODO / MONTAÑA FULL-WIDTH ============ */
+.peak-stage{width:100%;margin-top:40px}
+.peak-media{position:relative;width:100%;line-height:0}
+.peak-img{width:100%;height:auto;display:block;
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 8%,#000 92%,transparent);
+  mask-image:linear-gradient(to right,transparent,#000 8%,#000 92%,transparent)}
+/* pines sobre los escalones */
+.peak-pin{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%) scale(.9);line-height:1.2;
+  display:flex;align-items:center;gap:11px;padding:8px 18px 8px 8px;border-radius:999px;white-space:nowrap;
+  background:rgba(5,10,25,.6);border:1px solid var(--glass-line);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 10px 30px rgba(0,0,0,.4);
+  opacity:0;transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.peak-stage.in .peak-pin{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.peak-stage.in .peak-pin[data-b="1"]{transition-delay:.15s}
+.peak-stage.in .peak-pin[data-b="2"]{transition-delay:.35s}
+.peak-stage.in .peak-pin[data-b="3"]{transition-delay:.55s}
+.peak-stage.in .peak-pin[data-b="4"]{transition-delay:.75s}
+.peak-pin span{flex:none;width:38px;height:38px;border-radius:11px;display:grid;place-items:center;
+  font-family:var(--font-d);font-weight:700;font-size:1.02rem;color:#fff}
+.peak-pin b{font-family:var(--font-d);font-weight:600;font-size:1.02rem;color:#fff}
+.peak-pin[data-b="4"] span{background:linear-gradient(160deg,#fb923c,#f97316)}
+.peak-pin[data-b="3"] span{background:linear-gradient(160deg,#7dd3fc,#38bdf8)}
+.peak-pin[data-b="2"] span{background:linear-gradient(160deg,#3b82f6,#2563eb)}
+.peak-pin[data-b="1"] span{background:linear-gradient(160deg,#2563eb,#1e3a8a)}
+/* pelotita subiendo los escalones en loop */
+.peak-ball{position:absolute;width:22px;height:22px;border-radius:50%;z-index:3;
+  background:radial-gradient(circle at 32% 30%,#fff 0%,#7dd3fc 45%,#2563eb 100%);
+  box-shadow:0 0 18px rgba(56,189,248,.9),0 4px 8px rgba(0,0,0,.4);
+  transform:translate(-50%,-50%);left:88%;top:74%;
+  animation:ballclimb 6.5s cubic-bezier(.5,0,.5,1) infinite}
+@keyframes ballclimb{
+  0%   {left:88%; top:74%; opacity:0}
+  6%   {opacity:1}
+  16%  {left:76%; top:65%}                 /* escalón 01 */
+  22%  {left:74.5%; top:59.5%}             /* sube contra-escalón */
+  34%  {left:70%; top:51%}                 /* escalón 02 */
+  40%  {left:66%; top:45%}
+  52%  {left:61%; top:37%}                 /* escalón 03 */
+  58%  {left:57%; top:31%}
+  72%  {left:54%; top:23%}                 /* cima 04 */
+  84%  {left:54%; top:23%; opacity:1}      /* pausa en la cima */
+  92%  {left:54%; top:23%; opacity:0}      /* desvanece */
+  100% {left:88%; top:74%; opacity:0}      /* regresa a la base */
+}
+@media(prefers-reduced-motion:reduce){.peak-ball{display:none}}
+/* lista de pilares (solo móvil) */
+.peak-list{display:none;list-style:none;margin:28px auto 0;padding:0;gap:12px}
+.peak-list li{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:var(--r-md);
+  background:var(--glass);border:1px solid var(--glass-line-soft)}
+.peak-list span{flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;
+  font-family:var(--font-d);font-weight:700;color:#fff}
+.peak-list b{font-family:var(--font-d);font-weight:600;font-size:1.1rem}
+.peak-list li[data-b="4"] span{background:linear-gradient(160deg,#fb923c,#f97316)}
+.peak-list li[data-b="3"] span{background:linear-gradient(160deg,#7dd3fc,#38bdf8)}
+.peak-list li[data-b="2"] span{background:linear-gradient(160deg,#3b82f6,#2563eb)}
+.peak-list li[data-b="1"] span{background:linear-gradient(160deg,#2563eb,#1e3a8a)}
 
 /* ============ STATS ============ */
 .stats{padding:80px 0}
@@ -427,8 +448,8 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset
   .hero-grid{grid-template-columns:1fr;gap:70px}
   .hero-visual{order:2}
   .about-grid{grid-template-columns:1fr}
-  .peak{grid-template-columns:1fr;gap:36px}
-  .peak-graphic{max-width:420px;margin-inline:auto}
+  .peak-pin,.peak-ball{display:none}
+  .peak-list{display:grid}
   .cards,.v-cards,.mvv-grid{grid-template-columns:1fr 1fr}
   .stats-panel{grid-template-columns:1fr 1fr}
   .stat:nth-child(2){border-right:none}
@@ -715,38 +736,29 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset
       <h2 class="h2">Tu crecimiento <em class="accent grad-text">comienza aquí</em></h2>
       <p class="lead">Cuatro pilares que vivimos todos los días. No son un póster en la pared: son el filtro con el que trabajamos, ascendemos y lideramos.</p>
     </div>
-    <div class="peak reveal">
-      <!-- Montaña / pirámide -->
-      <div class="peak-graphic" aria-hidden="true">
-        <svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg" class="peak-svg">
-          <defs>
-            <linearGradient id="pkPeak" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7dd3fc"/><stop offset="1" stop-color="#38bdf8"/></linearGradient>
-            <linearGradient id="pk3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#3b82f6"/></linearGradient>
-            <linearGradient id="pk2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b82f6"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
-            <linearGradient id="pk1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2563eb"/><stop offset="1" stop-color="#1e3a8a"/></linearGradient>
-          </defs>
-          <!-- bandas: base (01) -> cima (04) -->
-          <polygon class="pk-band pk-b1" points="80,227.5 320,227.5 360,300 40,300" fill="url(#pk1)"/>
-          <polygon class="pk-band pk-b2" points="120,155 280,155 320,227.5 80,227.5" fill="url(#pk2)"/>
-          <polygon class="pk-band pk-b3" points="160,82.5 240,82.5 280,155 120,155" fill="url(#pk3)"/>
-          <polygon class="pk-band pk-b4" points="200,10 240,82.5 160,82.5" fill="url(#pkPeak)"/>
-          <!-- números -->
-          <text class="pk-num" x="200" y="270">01</text>
-          <text class="pk-num" x="200" y="197">02</text>
-          <text class="pk-num" x="200" y="125">03</text>
-          <text class="pk-num pk-num-top" x="200" y="63">04</text>
-          <!-- bandera en la cima -->
-          <g class="pk-flag"><line x1="200" y1="30" x2="200" y2="6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="M200 8 L216 13 L200 18 Z" fill="#fff"/></g>
-        </svg>
-      </div>
-      <!-- niveles (cima -> base para alinear con la montaña) -->
-      <ol class="peak-steps">
-        <li class="peak-step" style="--i:0"><span class="ps-badge" data-b="4">04</span><div><h3>Crecimiento</h3><p>El resultado natural: más ingresos, más responsabilidad, tu propio equipo. En Hefzi-bá formamos líderes, y los líderes multiplican.</p></div></li>
-        <li class="peak-step" style="--i:1"><span class="ps-badge" data-b="3">03</span><div><h3>Constancia</h3><p>Los resultados extraordinarios son ordinarios repetidos: seguimiento diario, práctica deliberada y disciplina en campo.</p></div></li>
-        <li class="peak-step" style="--i:2"><span class="ps-badge" data-b="2">02</span><div><h3>Compromiso</h3><p>Metas claras y palabra cumplida. Te comprometes con tu resultado, con tu equipo y con tu proceso de desarrollo.</p></div></li>
-        <li class="peak-step" style="--i:3"><span class="ps-badge" data-b="1">01</span><div><h3>Actitud</h3><p>Todo empieza con cómo llegas: energía, apertura y disposición de aprender. La actitud no se enseña — se elige cada mañana.</p></div></li>
-      </ol>
+  </div>
+
+  <!-- Montaña a todo el ancho con puntos sobre los escalones -->
+  <div class="peak-stage reveal">
+    <div class="peak-media">
+      <!-- TU IMAGEN: assets/img/metodo.png (prueba .png y .jpg) -->
+      <img class="peak-img" src="assets/img/metodo.png" alt="Ruta de crecimiento Hefzi-bá"
+           onerror="if(this.src.endsWith('.png'))this.src=this.src.slice(0,-4)+'.jpg'">
+      <!-- pelotita que sube los escalones en loop -->
+      <span class="peak-ball" aria-hidden="true"></span>
+      <!-- puntos sobre los escalones (coordenadas en % de la imagen) -->
+      <div class="peak-pin" style="--x:76%;--y:63%"  data-b="1"><span>01</span><b>Actitud</b></div>
+      <div class="peak-pin" style="--x:70%;--y:49%"  data-b="2"><span>02</span><b>Compromiso</b></div>
+      <div class="peak-pin" style="--x:61%;--y:35%"  data-b="3"><span>03</span><b>Constancia</b></div>
+      <div class="peak-pin" style="--x:54%;--y:23%"  data-b="4"><span>04</span><b>Crecimiento</b></div>
     </div>
+    <!-- lista para móvil (los pines flotantes se ocultan en pantallas chicas) -->
+    <ol class="peak-list wrap">
+      <li data-b="1"><span>01</span><b>Actitud</b></li>
+      <li data-b="2"><span>02</span><b>Compromiso</b></li>
+      <li data-b="3"><span>03</span><b>Constancia</b></li>
+      <li data-b="4"><span>04</span><b>Crecimiento</b></li>
+    </ol>
   </div>
 </section>
 
