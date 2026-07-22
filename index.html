@@ -294,17 +294,41 @@ section{position:relative;padding:110px 0;z-index:2}
 .p-card .more svg{transition:transform .3s var(--ease)}
 .p-card:hover .more svg{transform:translateX(5px)}
 
-/* ============ PILARES / TIMELINE ============ */
-.steps{position:relative;margin-top:64px;display:grid;gap:0}
-.steps::before{content:"";position:absolute;left:27px;top:14px;bottom:14px;width:1px;
-  background:linear-gradient(180deg,transparent,var(--sky) 15%,var(--blue) 60%,var(--indigo) 90%,transparent)}
-.step{position:relative;display:grid;grid-template-columns:56px 1fr;gap:26px;padding:26px 0}
-.step-dot{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;z-index:1;
-  font-family:var(--font-d);font-weight:600;font-size:1.05rem;
-  background:var(--bg-2);border:1px solid var(--glass-line);box-shadow:0 0 0 6px rgba(5,7,13,.9)}
-.step.in .step-dot{background:var(--grad);color:#fff;transition:background .5s}
-.step h3{font-size:1.35rem;margin-bottom:6px}
-.step p{color:var(--ink-soft);font-weight:300;max-width:60ch}
+/* ============ MÉTODO / PIRÁMIDE ============ */
+.peak{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center;margin-top:60px}
+.peak-graphic{position:relative}
+.peak-svg{width:100%;height:auto;overflow:visible;filter:drop-shadow(0 30px 60px rgba(37,99,235,.28))}
+.pk-band{transform-origin:200px 300px;opacity:0;transform:translateY(24px) scale(.96);
+  transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.peak.in .pk-band{opacity:1;transform:none}
+.peak.in .pk-b1{transition-delay:.05s}.peak.in .pk-b2{transition-delay:.2s}
+.peak.in .pk-b3{transition-delay:.35s}.peak.in .pk-b4{transition-delay:.5s}
+.pk-num{fill:#fff;font-family:var(--font-d);font-weight:700;font-size:20px;text-anchor:middle;
+  opacity:0;transition:opacity .5s ease .55s}
+.pk-num-top{font-size:17px}
+.peak.in .pk-num{opacity:.96}
+.pk-flag{opacity:0;transform-box:fill-box;transform-origin:bottom;transform:scaleY(0);transform-origin:200px 30px;
+  transition:opacity .4s ease .9s,transform .5s var(--ease) .9s}
+.peak.in .pk-flag{opacity:1;transform:none;animation:flagwave 3s ease-in-out 1.4s infinite}
+@keyframes flagwave{0%,100%{transform:rotate(0)}50%{transform:rotate(-4deg)}}
+
+.peak-steps{list-style:none;display:grid;gap:14px;margin:0;padding:0}
+.peak-step{position:relative;display:grid;grid-template-columns:52px 1fr;gap:18px;align-items:start;
+  padding:16px 18px;border-radius:var(--r-md);
+  background:var(--glass);border:1px solid var(--glass-line-soft);
+  opacity:0;transform:translateX(24px);
+  transition:opacity .6s var(--ease),transform .6s var(--ease),border-color .3s,background .3s;
+  transition-delay:calc(.15s + var(--i) * .12s)}
+.peak.in .peak-step{opacity:1;transform:none}
+.peak-step:hover{background:var(--glass-strong);border-color:rgba(59,130,246,.4)}
+.ps-badge{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;
+  font-family:var(--font-d);font-weight:700;font-size:1.15rem;color:#fff}
+.ps-badge[data-b="4"]{background:linear-gradient(160deg,#7dd3fc,#38bdf8)}
+.ps-badge[data-b="3"]{background:linear-gradient(160deg,#38bdf8,#3b82f6)}
+.ps-badge[data-b="2"]{background:linear-gradient(160deg,#3b82f6,#2563eb)}
+.ps-badge[data-b="1"]{background:linear-gradient(160deg,#2563eb,#1e3a8a)}
+.peak-step h3{font-size:1.2rem;margin-bottom:4px}
+.peak-step p{color:var(--ink-soft);font-weight:300;font-size:.92rem}
 
 /* ============ STATS ============ */
 .stats{padding:80px 0}
@@ -403,6 +427,8 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset
   .hero-grid{grid-template-columns:1fr;gap:70px}
   .hero-visual{order:2}
   .about-grid{grid-template-columns:1fr}
+  .peak{grid-template-columns:1fr;gap:36px}
+  .peak-graphic{max-width:420px;margin-inline:auto}
   .cards,.v-cards,.mvv-grid{grid-template-columns:1fr 1fr}
   .stats-panel{grid-template-columns:1fr 1fr}
   .stat:nth-child(2){border-right:none}
@@ -689,11 +715,37 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset
       <h2 class="h2">Tu crecimiento <em class="accent grad-text">comienza aquí</em></h2>
       <p class="lead">Cuatro pilares que vivimos todos los días. No son un póster en la pared: son el filtro con el que trabajamos, ascendemos y lideramos.</p>
     </div>
-    <div class="steps">
-      <div class="step reveal"><div class="step-dot">01</div><div><h3>Actitud</h3><p>Todo empieza con cómo llegas: energía, apertura y disposición de aprender. La actitud no se enseña — se elige cada mañana.</p></div></div>
-      <div class="step reveal" data-d="1"><div class="step-dot">02</div><div><h3>Compromiso</h3><p>Metas claras y palabra cumplida. Te comprometes con tu resultado, con tu equipo y con tu propio proceso de desarrollo.</p></div></div>
-      <div class="step reveal" data-d="2"><div class="step-dot">03</div><div><h3>Constancia</h3><p>Los resultados extraordinarios son ordinarios repetidos: seguimiento diario, práctica deliberada y disciplina en campo.</p></div></div>
-      <div class="step reveal" data-d="3"><div class="step-dot">04</div><div><h3>Crecimiento</h3><p>El resultado natural: más ingresos, más responsabilidad, tu propio equipo. En Hefzi-bá formamos líderes, y los líderes multiplican.</p></div></div>
+    <div class="peak reveal">
+      <!-- Montaña / pirámide -->
+      <div class="peak-graphic" aria-hidden="true">
+        <svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg" class="peak-svg">
+          <defs>
+            <linearGradient id="pkPeak" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7dd3fc"/><stop offset="1" stop-color="#38bdf8"/></linearGradient>
+            <linearGradient id="pk3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#3b82f6"/></linearGradient>
+            <linearGradient id="pk2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b82f6"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
+            <linearGradient id="pk1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2563eb"/><stop offset="1" stop-color="#1e3a8a"/></linearGradient>
+          </defs>
+          <!-- bandas: base (01) -> cima (04) -->
+          <polygon class="pk-band pk-b1" points="80,227.5 320,227.5 360,300 40,300" fill="url(#pk1)"/>
+          <polygon class="pk-band pk-b2" points="120,155 280,155 320,227.5 80,227.5" fill="url(#pk2)"/>
+          <polygon class="pk-band pk-b3" points="160,82.5 240,82.5 280,155 120,155" fill="url(#pk3)"/>
+          <polygon class="pk-band pk-b4" points="200,10 240,82.5 160,82.5" fill="url(#pkPeak)"/>
+          <!-- números -->
+          <text class="pk-num" x="200" y="270">01</text>
+          <text class="pk-num" x="200" y="197">02</text>
+          <text class="pk-num" x="200" y="125">03</text>
+          <text class="pk-num pk-num-top" x="200" y="63">04</text>
+          <!-- bandera en la cima -->
+          <g class="pk-flag"><line x1="200" y1="30" x2="200" y2="6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="M200 8 L216 13 L200 18 Z" fill="#fff"/></g>
+        </svg>
+      </div>
+      <!-- niveles (cima -> base para alinear con la montaña) -->
+      <ol class="peak-steps">
+        <li class="peak-step" style="--i:0"><span class="ps-badge" data-b="4">04</span><div><h3>Crecimiento</h3><p>El resultado natural: más ingresos, más responsabilidad, tu propio equipo. En Hefzi-bá formamos líderes, y los líderes multiplican.</p></div></li>
+        <li class="peak-step" style="--i:1"><span class="ps-badge" data-b="3">03</span><div><h3>Constancia</h3><p>Los resultados extraordinarios son ordinarios repetidos: seguimiento diario, práctica deliberada y disciplina en campo.</p></div></li>
+        <li class="peak-step" style="--i:2"><span class="ps-badge" data-b="2">02</span><div><h3>Compromiso</h3><p>Metas claras y palabra cumplida. Te comprometes con tu resultado, con tu equipo y con tu proceso de desarrollo.</p></div></li>
+        <li class="peak-step" style="--i:3"><span class="ps-badge" data-b="1">01</span><div><h3>Actitud</h3><p>Todo empieza con cómo llegas: energía, apertura y disposición de aprender. La actitud no se enseña — se elige cada mañana.</p></div></li>
+      </ol>
     </div>
   </div>
 </section>
