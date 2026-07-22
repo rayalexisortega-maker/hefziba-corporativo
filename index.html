@@ -294,30 +294,49 @@ section{position:relative;padding:110px 0;z-index:2}
 .p-card .more svg{transition:transform .3s var(--ease)}
 .p-card:hover .more svg{transform:translateX(5px)}
 
-/* ============ MÉTODO / MONTAÑA FULL-WIDTH ============ */
-.peak-stage{width:100%;margin-top:40px}
-.peak-media{position:relative;width:100%;line-height:0}
-.peak-img{width:100%;height:auto;display:block;
-  -webkit-mask-image:linear-gradient(to right,transparent,#000 8%,#000 92%,transparent);
-  mask-image:linear-gradient(to right,transparent,#000 8%,#000 92%,transparent)}
-/* pines sobre los escalones */
-.peak-pin{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%) scale(.9);line-height:1.2;
-  display:flex;align-items:center;gap:11px;padding:8px 18px 8px 8px;border-radius:999px;white-space:nowrap;
-  background:rgba(5,10,25,.6);border:1px solid var(--glass-line);
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 10px 30px rgba(0,0,0,.4);
-  opacity:0;transition:opacity .6s var(--ease),transform .6s var(--ease)}
-.peak-stage.in .peak-pin{opacity:1;transform:translate(-50%,-50%) scale(1)}
-.peak-stage.in .peak-pin[data-b="1"]{transition-delay:.15s}
-.peak-stage.in .peak-pin[data-b="2"]{transition-delay:.35s}
-.peak-stage.in .peak-pin[data-b="3"]{transition-delay:.55s}
-.peak-stage.in .peak-pin[data-b="4"]{transition-delay:.75s}
-.peak-pin span{flex:none;width:38px;height:38px;border-radius:11px;display:grid;place-items:center;
-  font-family:var(--font-d);font-weight:700;font-size:1.02rem;color:#fff}
-.peak-pin b{font-family:var(--font-d);font-weight:600;font-size:1.02rem;color:#fff}
-.peak-pin[data-b="4"] span{background:linear-gradient(160deg,#fb923c,#f97316)}
-.peak-pin[data-b="3"] span{background:linear-gradient(160deg,#7dd3fc,#38bdf8)}
-.peak-pin[data-b="2"] span{background:linear-gradient(160deg,#3b82f6,#2563eb)}
-.peak-pin[data-b="1"] span{background:linear-gradient(160deg,#2563eb,#1e3a8a)}
+/* ============ MÉTODO (texto + montaña a un costado) ============ */
+.peak-wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-top:0}
+.peak-left .h2{margin-top:8px}
+.peak-left .lead{margin-bottom:30px}
+.peak-media{position:relative;width:100%;max-width:520px;margin-inline:auto;line-height:0}
+.peak-img{width:100%;height:auto;display:block}
+/* números sobre los escalones */
+.peak-num{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%) scale(.7);
+  width:34px;height:34px;border-radius:10px;display:grid;place-items:center;line-height:1;
+  font-family:var(--font-d);font-weight:700;font-size:.9rem;color:#fff;z-index:4;
+  box-shadow:0 6px 16px rgba(0,0,0,.4);opacity:0;transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.peak-right.in .peak-num{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.peak-right.in .peak-num[data-b="1"]{transition-delay:.2s}
+.peak-right.in .peak-num[data-b="2"]{transition-delay:.35s}
+.peak-right.in .peak-num[data-b="3"]{transition-delay:.5s}
+.peak-right.in .peak-num[data-b="4"]{transition-delay:.65s}
+.peak-num[data-b="4"]{background:linear-gradient(160deg,#fb923c,#f97316)}
+.peak-num[data-b="3"]{background:linear-gradient(160deg,#7dd3fc,#38bdf8)}
+.peak-num[data-b="2"]{background:linear-gradient(160deg,#3b82f6,#2563eb)}
+.peak-num[data-b="1"]{background:linear-gradient(160deg,#2563eb,#1e3a8a)}
+/* acordeón de pilares */
+.method-acc{display:grid;gap:12px}
+.ma-item{border-radius:var(--r-md);overflow:hidden;background:var(--glass);
+  border:1px solid var(--glass-line-soft);transition:border-color .3s,background .3s}
+.ma-item[data-open="1"]{border-color:rgba(59,130,246,.4);background:var(--glass-strong)}
+.ma-q{width:100%;display:flex;align-items:center;gap:14px;text-align:left;padding:14px 18px;min-height:44px}
+.ma-badge{flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;
+  font-family:var(--font-d);font-weight:700;font-size:1.05rem;color:#fff}
+.ma-item[data-b="4"] .ma-badge{background:linear-gradient(160deg,#fb923c,#f97316)}
+.ma-item[data-b="3"] .ma-badge{background:linear-gradient(160deg,#7dd3fc,#38bdf8)}
+.ma-item[data-b="2"] .ma-badge{background:linear-gradient(160deg,#3b82f6,#2563eb)}
+.ma-item[data-b="1"] .ma-badge{background:linear-gradient(160deg,#2563eb,#1e3a8a)}
+.ma-q b{flex:1;font-family:var(--font-d);font-weight:600;font-size:1.18rem}
+.ma-plus{flex:none;width:22px;height:22px;position:relative}
+.ma-plus::before,.ma-plus::after{content:"";position:absolute;top:50%;left:50%;background:var(--sky);border-radius:2px;
+  transition:transform .4s var(--ease)}
+.ma-plus::before{width:13px;height:2px;transform:translate(-50%,-50%)}
+.ma-plus::after{width:2px;height:13px;transform:translate(-50%,-50%)}
+.ma-item[data-open="1"] .ma-plus::after{transform:translate(-50%,-50%) rotate(90deg) scaleY(0)}
+.ma-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s var(--ease)}
+.ma-item[data-open="1"] .ma-a{grid-template-rows:1fr}
+.ma-a>div{overflow:hidden}
+.ma-a p{padding:0 18px 18px 76px;color:var(--ink-soft);font-weight:300;font-size:.95rem}
 /* pelota que rebota subiendo los escalones (arcos) + estela */
 .peak-ball,.peak-trail{position:absolute;left:86%;top:71%;border-radius:50%;
   transform:translate(-50%,-50%);will-change:left,top,transform;
@@ -346,17 +365,6 @@ section{position:relative;padding:110px 0;z-index:2}
   100% {left:86%;top:71%;opacity:0}
 }
 @media(prefers-reduced-motion:reduce){.peak-ball,.peak-trail{display:none}}
-/* lista de pilares (solo móvil) */
-.peak-list{display:none;list-style:none;margin:28px auto 0;padding:0;gap:12px}
-.peak-list li{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:var(--r-md);
-  background:var(--glass);border:1px solid var(--glass-line-soft)}
-.peak-list span{flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;
-  font-family:var(--font-d);font-weight:700;color:#fff}
-.peak-list b{font-family:var(--font-d);font-weight:600;font-size:1.1rem}
-.peak-list li[data-b="4"] span{background:linear-gradient(160deg,#fb923c,#f97316)}
-.peak-list li[data-b="3"] span{background:linear-gradient(160deg,#7dd3fc,#38bdf8)}
-.peak-list li[data-b="2"] span{background:linear-gradient(160deg,#3b82f6,#2563eb)}
-.peak-list li[data-b="1"] span{background:linear-gradient(160deg,#2563eb,#1e3a8a)}
 
 /* ============ STATS ============ */
 .stats{padding:80px 0}
@@ -455,8 +463,8 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset
   .hero-grid{grid-template-columns:1fr;gap:70px}
   .hero-visual{order:2}
   .about-grid{grid-template-columns:1fr}
-  .peak-pin,.peak-ball{display:none}
-  .peak-list{display:grid}
+  .peak-wrap{grid-template-columns:1fr;gap:36px}
+  .peak-right{order:-1}
   .cards,.v-cards,.mvv-grid{grid-template-columns:1fr 1fr}
   .stats-panel{grid-template-columns:1fr 1fr}
   .stat:nth-child(2){border-right:none}
@@ -468,6 +476,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset
   .nav-links,.nav-cta{display:none}
   .burger{display:flex}
   .cards,.v-cards,.mvv-grid{grid-template-columns:1fr}
+  .peak-num{width:26px;height:26px;font-size:.72rem;border-radius:8px}
   .mc-1{left:0}.mc-2{right:0}
   .cta-panel{padding:60px 24px}
   .foot-grid{grid-template-columns:1fr}
@@ -737,38 +746,49 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset
 
 <!-- ============ MÉTODO ============ -->
 <section id="metodo">
-  <div class="wrap">
-    <div class="reveal">
+  <div class="wrap peak-wrap">
+    <!-- Texto + tarjetas desplegables -->
+    <div class="peak-left reveal">
       <span class="kicker">Nuestro método</span>
       <h2 class="h2">Tu crecimiento <em class="accent grad-text">comienza aquí</em></h2>
       <p class="lead">Cuatro pilares que vivimos todos los días. No son un póster en la pared: son el filtro con el que trabajamos, ascendemos y lideramos.</p>
+      <div class="method-acc">
+        <div class="ma-item" data-b="1" data-open="1">
+          <button class="ma-q" aria-expanded="true"><span class="ma-badge">01</span><b>Actitud</b><i class="ma-plus" aria-hidden="true"></i></button>
+          <div class="ma-a"><div><p>Todo empieza con cómo llegas: energía, apertura y disposición de aprender. La actitud no se enseña — se elige cada mañana.</p></div></div>
+        </div>
+        <div class="ma-item" data-b="2" data-open="0">
+          <button class="ma-q" aria-expanded="false"><span class="ma-badge">02</span><b>Compromiso</b><i class="ma-plus" aria-hidden="true"></i></button>
+          <div class="ma-a"><div><p>Metas claras y palabra cumplida. Te comprometes con tu resultado, con tu equipo y con tu propio proceso de desarrollo.</p></div></div>
+        </div>
+        <div class="ma-item" data-b="3" data-open="0">
+          <button class="ma-q" aria-expanded="false"><span class="ma-badge">03</span><b>Constancia</b><i class="ma-plus" aria-hidden="true"></i></button>
+          <div class="ma-a"><div><p>Los resultados extraordinarios son ordinarios repetidos: seguimiento diario, práctica deliberada y disciplina en campo.</p></div></div>
+        </div>
+        <div class="ma-item" data-b="4" data-open="0">
+          <button class="ma-q" aria-expanded="false"><span class="ma-badge">04</span><b>Crecimiento</b><i class="ma-plus" aria-hidden="true"></i></button>
+          <div class="ma-a"><div><p>El resultado natural: más ingresos, más responsabilidad, tu propio equipo. En Hefzi-bá formamos líderes, y los líderes multiplican.</p></div></div>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <!-- Montaña a todo el ancho con puntos sobre los escalones -->
-  <div class="peak-stage reveal">
-    <div class="peak-media">
-      <!-- TU IMAGEN: assets/img/metodo.png (prueba .png y .jpg) -->
-      <img class="peak-img" src="assets/img/metodo.png" alt="Ruta de crecimiento Hefzi-bá"
-           onerror="if(this.src.endsWith('.png'))this.src=this.src.slice(0,-4)+'.jpg'">
-      <!-- pelotita que rebota subiendo los escalones, con estela -->
-      <span class="peak-trail t3" aria-hidden="true"></span>
-      <span class="peak-trail t2" aria-hidden="true"></span>
-      <span class="peak-trail t1" aria-hidden="true"></span>
-      <span class="peak-ball" aria-hidden="true"></span>
-      <!-- puntos sobre los escalones (coordenadas en % de la imagen) -->
-      <div class="peak-pin" style="--x:76%;--y:63%"  data-b="1"><span>01</span><b>Actitud</b></div>
-      <div class="peak-pin" style="--x:70%;--y:49%"  data-b="2"><span>02</span><b>Compromiso</b></div>
-      <div class="peak-pin" style="--x:61%;--y:35%"  data-b="3"><span>03</span><b>Constancia</b></div>
-      <div class="peak-pin" style="--x:54%;--y:23%"  data-b="4"><span>04</span><b>Crecimiento</b></div>
+    <!-- Montaña (a un costado, con pelota que rebota) -->
+    <div class="peak-right reveal" data-d="1">
+      <div class="peak-media">
+        <!-- TU IMAGEN: assets/img/metodo.png (prueba .png y .jpg) -->
+        <img class="peak-img" src="assets/img/metodo.png" alt="Ruta de crecimiento Hefzi-bá"
+             onerror="if(this.src.endsWith('.png'))this.src=this.src.slice(0,-4)+'.jpg'">
+        <span class="peak-trail t3" aria-hidden="true"></span>
+        <span class="peak-trail t2" aria-hidden="true"></span>
+        <span class="peak-trail t1" aria-hidden="true"></span>
+        <span class="peak-ball" aria-hidden="true"></span>
+        <!-- números sobre los escalones -->
+        <span class="peak-num" style="--x:76%;--y:63%" data-b="1">01</span>
+        <span class="peak-num" style="--x:70%;--y:49%" data-b="2">02</span>
+        <span class="peak-num" style="--x:61%;--y:35%" data-b="3">03</span>
+        <span class="peak-num" style="--x:54%;--y:23%" data-b="4">04</span>
+      </div>
     </div>
-    <!-- lista para móvil (los pines flotantes se ocultan en pantallas chicas) -->
-    <ol class="peak-list wrap">
-      <li data-b="1"><span>01</span><b>Actitud</b></li>
-      <li data-b="2"><span>02</span><b>Compromiso</b></li>
-      <li data-b="3"><span>03</span><b>Constancia</b></li>
-      <li data-b="4"><span>04</span><b>Crecimiento</b></li>
-    </ol>
   </div>
 </section>
 
@@ -1178,6 +1198,19 @@ document.querySelectorAll(".faq-item").forEach(function(item){
       o.querySelector(".faq-q").setAttribute("aria-expanded","false");
     });
     if(!open){ item.setAttribute("open-state","1"); q.setAttribute("aria-expanded","true"); }
+  });
+});
+
+/* Acordeón del método (pilares) */
+document.querySelectorAll(".ma-item").forEach(function(item){
+  var q = item.querySelector(".ma-q");
+  q.addEventListener("click", function(){
+    var open = item.getAttribute("data-open") === "1";
+    document.querySelectorAll(".ma-item").forEach(function(o){
+      o.setAttribute("data-open","0");
+      o.querySelector(".ma-q").setAttribute("aria-expanded","false");
+    });
+    if(!open){ item.setAttribute("data-open","1"); q.setAttribute("aria-expanded","true"); }
   });
 });
 })();
