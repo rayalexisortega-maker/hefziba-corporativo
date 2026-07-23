@@ -294,57 +294,54 @@ section{position:relative;padding:110px 0;z-index:2}
 .p-card .more svg{transition:transform .3s var(--ease)}
 .p-card:hover .more svg{transform:translateX(5px)}
 
-/* ============ MÉTODO (texto + montaña a un costado) ============ */
-.peak-wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-top:0}
-.peak-left .h2{margin-top:8px}
-.peak-left .lead{margin-bottom:30px}
-.peak-right{position:relative;display:flex;align-items:center;justify-content:center}
-.peak-media{position:relative;width:100%;max-width:560px;margin-inline:auto;line-height:0;isolation:isolate}
-/* la imagen, apoyada con sombra para no flotar en el vacío */
+/* ============ MÉTODO (montaña grande + cajas por escalón) ============ */
+.peak-scene{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:44px;
+  align-items:center;margin-top:52px}
+.peak-art{position:relative;isolation:isolate}
 .peak-img{position:relative;z-index:1;width:100%;height:auto;display:block;
-  filter:drop-shadow(0 34px 40px rgba(0,0,0,.55))}
-/* piso: elipse tenue bajo la montaña */
-.peak-media::after{content:"";position:absolute;z-index:0;left:50%;bottom:2%;width:82%;height:12%;
-  transform:translateX(-50%);border-radius:50%;
-  background:radial-gradient(ellipse,rgba(56,189,248,.28),transparent 70%);filter:blur(14px)}
-/* foco de luz: sigue el pilar activo (color + altura) */
-@property --glowc{syntax:'<color>';inherits:true;initial-value:#38bdf8}
-@property --glowy{syntax:'<percentage>';inherits:true;initial-value:36%}
-.peak-glow{position:absolute;z-index:0;left:58%;top:var(--glowy);width:135%;aspect-ratio:1;
+  filter:drop-shadow(0 30px 44px rgba(0,0,0,.55))}
+/* foco de luz para apoyar la montaña */
+.peak-glow{position:absolute;z-index:0;left:56%;top:52%;width:118%;aspect-ratio:1;
   transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;
-  background:radial-gradient(closest-side,var(--glowc),transparent 66%);
-  opacity:.6;filter:blur(26px);
-  transition:--glowc .7s var(--ease),--glowy .7s var(--ease);
-  animation:glowbreath 6s ease-in-out infinite}
-@keyframes glowbreath{0%,100%{opacity:.48}50%{opacity:.72}}
-.peak-media[data-active="1"]{--glowc:#2f6bff;--glowy:66%}
-.peak-media[data-active="2"]{--glowc:#3b82f6;--glowy:52%}
-.peak-media[data-active="3"]{--glowc:#38bdf8;--glowy:39%}
-.peak-media[data-active="4"]{--glowc:#f97316;--glowy:27%}
-@media(prefers-reduced-motion:reduce){.peak-glow{animation:none}}
-/* acordeón de pilares */
-.method-acc{display:grid;gap:12px}
-.ma-item{border-radius:var(--r-md);overflow:hidden;background:var(--glass);
-  border:1px solid var(--glass-line-soft);transition:border-color .3s,background .3s}
-.ma-item[data-open="1"]{border-color:rgba(59,130,246,.4);background:var(--glass-strong)}
-.ma-q{width:100%;display:flex;align-items:center;gap:14px;text-align:left;padding:14px 18px;min-height:44px}
-.ma-badge{flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;
-  font-family:var(--font-d);font-weight:700;font-size:1.05rem;color:#fff}
-.ma-item[data-b="4"] .ma-badge{background:linear-gradient(160deg,#fb923c,#f97316)}
-.ma-item[data-b="3"] .ma-badge{background:linear-gradient(160deg,#7dd3fc,#38bdf8)}
-.ma-item[data-b="2"] .ma-badge{background:linear-gradient(160deg,#3b82f6,#2563eb)}
-.ma-item[data-b="1"] .ma-badge{background:linear-gradient(160deg,#2563eb,#1e3a8a)}
-.ma-q b{flex:1;font-family:var(--font-d);font-weight:600;font-size:1.18rem}
-.ma-plus{flex:none;width:22px;height:22px;position:relative}
-.ma-plus::before,.ma-plus::after{content:"";position:absolute;top:50%;left:50%;background:var(--sky);border-radius:2px;
-  transition:transform .4s var(--ease)}
-.ma-plus::before{width:13px;height:2px;transform:translate(-50%,-50%)}
-.ma-plus::after{width:2px;height:13px;transform:translate(-50%,-50%)}
-.ma-item[data-open="1"] .ma-plus::after{transform:translate(-50%,-50%) rotate(90deg) scaleY(0)}
-.ma-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s var(--ease)}
-.ma-item[data-open="1"] .ma-a{grid-template-rows:1fr}
-.ma-a>div{overflow:hidden}
-.ma-a p{padding:0 18px 18px 76px;color:var(--ink-soft);font-weight:300;font-size:.95rem}
+  background:radial-gradient(closest-side,rgba(56,132,246,.5),transparent 66%);
+  filter:blur(30px);animation:glowbreath 6s ease-in-out infinite}
+@keyframes glowbreath{0%,100%{opacity:.5}50%{opacity:.78}}
+/* números sobre cada escalón */
+.peak-dot{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);z-index:4;
+  width:34px;height:34px;border-radius:11px;display:grid;place-items:center;line-height:1;
+  font-family:var(--font-d);font-weight:700;font-size:.92rem;color:#fff;
+  box-shadow:0 6px 16px rgba(0,0,0,.5),0 0 0 4px rgba(5,7,13,.55);
+  opacity:0;transition:opacity .5s var(--ease) calc(var(--i,0)*.12s),transform .5s var(--ease)}
+.peak-scene.in .peak-dot{opacity:1}
+.peak-dot[data-b="1"]{--i:0;background:linear-gradient(160deg,#3b82f6,#1e3a8a)}
+.peak-dot[data-b="2"]{--i:1;background:linear-gradient(160deg,#3b82f6,#2563eb)}
+.peak-dot[data-b="3"]{--i:2;background:linear-gradient(160deg,#7dd3fc,#38bdf8)}
+.peak-dot[data-b="4"]{--i:3;background:linear-gradient(160deg,#fb923c,#f97316)}
+/* líneas conectoras */
+.peak-links{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;overflow:visible}
+.peak-links line{stroke-width:2;stroke-dasharray:5 5;opacity:.55}
+.peak-links circle{r:3.5}
+/* cajas de info */
+.peak-cards{list-style:none;display:flex;flex-direction:column;gap:14px;margin:0;padding:0;z-index:3;position:relative}
+.mc-card{display:flex;gap:15px;align-items:flex-start;padding:16px 18px;border-radius:var(--r-md);
+  background:var(--glass);border:1px solid var(--glass-line-soft);
+  transition:transform .35s var(--ease),border-color .35s,background .35s;
+  opacity:0;transform:translateX(20px);
+  transition:opacity .55s var(--ease),transform .55s var(--ease)}
+.peak-scene.in .mc-card{opacity:1;transform:none}
+.peak-scene.in .mc-card[data-b="4"]{transition-delay:.1s}
+.peak-scene.in .mc-card[data-b="3"]{transition-delay:.22s}
+.peak-scene.in .mc-card[data-b="2"]{transition-delay:.34s}
+.peak-scene.in .mc-card[data-b="1"]{transition-delay:.46s}
+.mc-card:hover{border-color:rgba(59,130,246,.45);background:var(--glass-strong);transform:translateX(-3px)}
+.mc-badge{flex:none;width:46px;height:46px;border-radius:13px;display:grid;place-items:center;
+  font-family:var(--font-d);font-weight:700;font-size:1.08rem;color:#fff}
+.mc-card[data-b="4"] .mc-badge{background:linear-gradient(160deg,#fb923c,#f97316)}
+.mc-card[data-b="3"] .mc-badge{background:linear-gradient(160deg,#7dd3fc,#38bdf8)}
+.mc-card[data-b="2"] .mc-badge{background:linear-gradient(160deg,#3b82f6,#2563eb)}
+.mc-card[data-b="1"] .mc-badge{background:linear-gradient(160deg,#2563eb,#1e3a8a)}
+.mc-card h3{font-family:var(--font-d);font-weight:600;font-size:1.14rem;margin-bottom:4px}
+.mc-card p{color:var(--ink-soft);font-weight:300;font-size:.9rem;line-height:1.55}
 /* pelota que rebota subiendo los escalones (arcos) + estela */
 .peak-ball,.peak-trail{position:absolute;left:86%;top:71%;border-radius:50%;
   transform:translate(-50%,-50%);will-change:left,top,transform;
@@ -471,8 +468,9 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset
   .hero-grid{grid-template-columns:1fr;gap:70px}
   .hero-visual{order:2}
   .about-grid{grid-template-columns:1fr}
-  .peak-wrap{grid-template-columns:1fr;gap:36px}
-  .peak-right{order:-1}
+  .peak-scene{grid-template-columns:1fr;gap:30px}
+  .peak-art{max-width:520px;margin-inline:auto;width:100%}
+  .peak-links{display:none}
   .cards,.v-cards,.mvv-grid{grid-template-columns:1fr 1fr}
   .stats-panel{grid-template-columns:1fr 1fr}
   .stat:nth-child(2){border-right:none}
@@ -753,35 +751,16 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset
 
 <!-- ============ MÉTODO ============ -->
 <section id="metodo">
-  <div class="wrap peak-wrap">
-    <!-- Texto + tarjetas desplegables -->
-    <div class="peak-left reveal">
+  <div class="wrap">
+    <div class="reveal" style="max-width:660px">
       <span class="kicker">Nuestro método</span>
       <h2 class="h2">Tu crecimiento <em class="accent grad-text">comienza aquí</em></h2>
       <p class="lead">Cuatro pilares que vivimos todos los días. No son un póster en la pared: son el filtro con el que trabajamos, ascendemos y lideramos.</p>
-      <div class="method-acc">
-        <div class="ma-item" data-b="1" data-open="1">
-          <button class="ma-q" aria-expanded="true"><span class="ma-badge">01</span><b>Actitud</b><i class="ma-plus" aria-hidden="true"></i></button>
-          <div class="ma-a"><div><p>Todo empieza con cómo llegas: energía, apertura y disposición de aprender. La actitud no se enseña — se elige cada mañana.</p></div></div>
-        </div>
-        <div class="ma-item" data-b="2" data-open="0">
-          <button class="ma-q" aria-expanded="false"><span class="ma-badge">02</span><b>Compromiso</b><i class="ma-plus" aria-hidden="true"></i></button>
-          <div class="ma-a"><div><p>Metas claras y palabra cumplida. Te comprometes con tu resultado, con tu equipo y con tu propio proceso de desarrollo.</p></div></div>
-        </div>
-        <div class="ma-item" data-b="3" data-open="0">
-          <button class="ma-q" aria-expanded="false"><span class="ma-badge">03</span><b>Constancia</b><i class="ma-plus" aria-hidden="true"></i></button>
-          <div class="ma-a"><div><p>Los resultados extraordinarios son ordinarios repetidos: seguimiento diario, práctica deliberada y disciplina en campo.</p></div></div>
-        </div>
-        <div class="ma-item" data-b="4" data-open="0">
-          <button class="ma-q" aria-expanded="false"><span class="ma-badge">04</span><b>Crecimiento</b><i class="ma-plus" aria-hidden="true"></i></button>
-          <div class="ma-a"><div><p>El resultado natural: más ingresos, más responsabilidad, tu propio equipo. En Hefzi-bá formamos líderes, y los líderes multiplican.</p></div></div>
-        </div>
-      </div>
     </div>
 
-    <!-- Montaña (a un costado, con foco vivo y pelota que rebota) -->
-    <div class="peak-right reveal" data-d="1">
-      <div class="peak-media" data-active="1">
+    <div class="peak-scene reveal">
+      <!-- Montaña grande con números sobre cada escalón -->
+      <div class="peak-art">
         <span class="peak-glow" aria-hidden="true"></span>
         <!-- TU IMAGEN: assets/img/metodo.png (prueba .png y .jpg) -->
         <img class="peak-img" src="assets/img/metodo.png" alt="Ruta de crecimiento Hefzi-bá"
@@ -790,7 +769,23 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset
         <span class="peak-trail t2" aria-hidden="true"></span>
         <span class="peak-trail t1" aria-hidden="true"></span>
         <span class="peak-ball" aria-hidden="true"></span>
+        <!-- puntos sobre los escalones (medidos sobre la imagen) -->
+        <b class="peak-dot" data-b="4" style="--x:62%;--y:30%">04</b>
+        <b class="peak-dot" data-b="3" style="--x:66%;--y:40%">03</b>
+        <b class="peak-dot" data-b="2" style="--x:72%;--y:50%">02</b>
+        <b class="peak-dot" data-b="1" style="--x:81%;--y:61%">01</b>
       </div>
+
+      <!-- Cajas de info, una por escalón (mismo color/número) -->
+      <ol class="peak-cards">
+        <li class="mc-card" data-b="4"><span class="mc-badge">04</span><div><h3>Crecimiento</h3><p>El resultado natural: más ingresos, más responsabilidad, tu propio equipo. En Hefzi-bá formamos líderes, y los líderes multiplican.</p></div></li>
+        <li class="mc-card" data-b="3"><span class="mc-badge">03</span><div><h3>Constancia</h3><p>Los resultados extraordinarios son ordinarios repetidos: seguimiento diario, práctica deliberada y disciplina en campo.</p></div></li>
+        <li class="mc-card" data-b="2"><span class="mc-badge">02</span><div><h3>Compromiso</h3><p>Metas claras y palabra cumplida. Te comprometes con tu resultado, con tu equipo y con tu proceso de desarrollo.</p></div></li>
+        <li class="mc-card" data-b="1"><span class="mc-badge">01</span><div><h3>Actitud</h3><p>Todo empieza con cómo llegas: energía, apertura y disposición de aprender. La actitud no se enseña — se elige cada mañana.</p></div></li>
+      </ol>
+
+      <!-- líneas conectoras (dibujadas por JS) -->
+      <svg class="peak-links" aria-hidden="true" preserveAspectRatio="none"></svg>
     </div>
   </div>
 </section>
@@ -1204,22 +1199,49 @@ document.querySelectorAll(".faq-item").forEach(function(item){
   });
 });
 
-/* Acordeón del método (pilares) + foco de la montaña sincronizado */
-var peakMedia = document.querySelector(".peak-media");
-document.querySelectorAll(".ma-item").forEach(function(item){
-  var q = item.querySelector(".ma-q");
-  q.addEventListener("click", function(){
-    var open = item.getAttribute("data-open") === "1";
-    document.querySelectorAll(".ma-item").forEach(function(o){
-      o.setAttribute("data-open","0");
-      o.querySelector(".ma-q").setAttribute("aria-expanded","false");
+/* Método: dibuja las líneas que conectan cada número del escalón con su caja */
+(function(){
+  var scene = document.querySelector(".peak-scene");
+  if(!scene) return;
+  var svg = scene.querySelector(".peak-links");
+  var colors = {"1":"#3b82f6","2":"#3b82f6","3":"#38bdf8","4":"#f97316"};
+  var SVGNS = "http://www.w3.org/2000/svg";
+
+  function draw(){
+    if(getComputedStyle(svg).display === "none"){ svg.innerHTML=""; return; }
+    var sr = scene.getBoundingClientRect();
+    svg.setAttribute("viewBox","0 0 "+sr.width+" "+sr.height);
+    svg.innerHTML = "";
+    ["4","3","2","1"].forEach(function(b){
+      var dot = scene.querySelector('.peak-dot[data-b="'+b+'"]');
+      var card = scene.querySelector('.mc-card[data-b="'+b+'"]');
+      if(!dot || !card) return;
+      var dr = dot.getBoundingClientRect(), cr = card.getBoundingClientRect();
+      var x1 = dr.left + dr.width/2 - sr.left, y1 = dr.top + dr.height/2 - sr.top;
+      var x2 = cr.left - sr.left,             y2 = cr.top + cr.height/2 - sr.top;
+      var line = document.createElementNS(SVGNS,"line");
+      line.setAttribute("x1",x1); line.setAttribute("y1",y1);
+      line.setAttribute("x2",x2); line.setAttribute("y2",y2);
+      line.setAttribute("stroke",colors[b]);
+      svg.appendChild(line);
+      var c1 = document.createElementNS(SVGNS,"circle");
+      c1.setAttribute("cx",x2); c1.setAttribute("cy",y2); c1.setAttribute("fill",colors[b]);
+      svg.appendChild(c1);
     });
-    if(!open){
-      item.setAttribute("data-open","1"); q.setAttribute("aria-expanded","true");
-      if(peakMedia) peakMedia.setAttribute("data-active", item.getAttribute("data-b"));
-    }
-  });
-});
+  }
+  var raf, to;
+  function schedule(){
+    cancelAnimationFrame(raf); raf = requestAnimationFrame(draw);
+    clearTimeout(to); to = setTimeout(draw, 120); /* fallback si rAF está pausado */
+  }
+  var img = document.querySelector(".peak-img");
+  if(img.complete) schedule(); else img.addEventListener("load", schedule);
+  draw();                                   /* intento inmediato */
+  addEventListener("load", schedule);
+  addEventListener("resize", schedule, {passive:true});
+  if(window.ResizeObserver) new ResizeObserver(schedule).observe(scene);
+  if(window.IntersectionObserver) new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting) schedule(); }); }).observe(scene);
+})();
 })();
 </script>
 </body>
