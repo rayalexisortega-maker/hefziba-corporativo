@@ -308,9 +308,9 @@ section{position:relative;padding:110px 0;z-index:2}
 @keyframes glowbreath{0%,100%{opacity:.5}50%{opacity:.78}}
 /* números sobre cada escalón */
 .peak-dot{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);z-index:4;
-  width:34px;height:34px;border-radius:11px;display:grid;place-items:center;line-height:1;
-  font-family:var(--font-d);font-weight:700;font-size:.92rem;color:#fff;
-  box-shadow:0 6px 16px rgba(0,0,0,.5),0 0 0 4px rgba(5,7,13,.55);
+  width:27px;height:27px;border-radius:8px;display:grid;place-items:center;line-height:1;
+  font-family:var(--font-d);font-weight:700;font-size:.72rem;color:#fff;
+  box-shadow:0 5px 12px rgba(0,0,0,.5),0 0 0 3px rgba(5,7,13,.55);
   opacity:0;transition:opacity .5s var(--ease) calc(var(--i,0)*.12s),transform .5s var(--ease)}
 .peak-scene.in .peak-dot{opacity:1}
 .peak-dot[data-b="1"]{--i:0;background:linear-gradient(160deg,#3b82f6,#1e3a8a)}
@@ -770,10 +770,10 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset
         <span class="peak-trail t1" aria-hidden="true"></span>
         <span class="peak-ball" aria-hidden="true"></span>
         <!-- puntos sobre los escalones (medidos sobre la imagen) -->
-        <b class="peak-dot" data-b="4" style="--x:62%;--y:30%">04</b>
-        <b class="peak-dot" data-b="3" style="--x:66%;--y:40%">03</b>
-        <b class="peak-dot" data-b="2" style="--x:72%;--y:50%">02</b>
-        <b class="peak-dot" data-b="1" style="--x:81%;--y:61%">01</b>
+        <b class="peak-dot" data-b="4" style="--x:53%;--y:28%">04</b>
+        <b class="peak-dot" data-b="3" style="--x:55%;--y:40%">03</b>
+        <b class="peak-dot" data-b="2" style="--x:63%;--y:51%">02</b>
+        <b class="peak-dot" data-b="1" style="--x:72%;--y:62%">01</b>
       </div>
 
       <!-- Cajas de info, una por escalón (mismo color/número) -->
