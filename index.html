@@ -298,22 +298,30 @@ section{position:relative;padding:110px 0;z-index:2}
 .peak-wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-top:0}
 .peak-left .h2{margin-top:8px}
 .peak-left .lead{margin-bottom:30px}
-.peak-media{position:relative;width:100%;max-width:520px;margin-inline:auto;line-height:0}
-.peak-img{width:100%;height:auto;display:block}
-/* números sobre los escalones */
-.peak-num{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%) scale(.7);
-  width:34px;height:34px;border-radius:10px;display:grid;place-items:center;line-height:1;
-  font-family:var(--font-d);font-weight:700;font-size:.9rem;color:#fff;z-index:4;
-  box-shadow:0 6px 16px rgba(0,0,0,.4);opacity:0;transition:opacity .5s var(--ease),transform .5s var(--ease)}
-.peak-right.in .peak-num{opacity:1;transform:translate(-50%,-50%) scale(1)}
-.peak-right.in .peak-num[data-b="1"]{transition-delay:.2s}
-.peak-right.in .peak-num[data-b="2"]{transition-delay:.35s}
-.peak-right.in .peak-num[data-b="3"]{transition-delay:.5s}
-.peak-right.in .peak-num[data-b="4"]{transition-delay:.65s}
-.peak-num[data-b="4"]{background:linear-gradient(160deg,#fb923c,#f97316)}
-.peak-num[data-b="3"]{background:linear-gradient(160deg,#7dd3fc,#38bdf8)}
-.peak-num[data-b="2"]{background:linear-gradient(160deg,#3b82f6,#2563eb)}
-.peak-num[data-b="1"]{background:linear-gradient(160deg,#2563eb,#1e3a8a)}
+.peak-right{position:relative;display:flex;align-items:center;justify-content:center}
+.peak-media{position:relative;width:100%;max-width:560px;margin-inline:auto;line-height:0;isolation:isolate}
+/* la imagen, apoyada con sombra para no flotar en el vacío */
+.peak-img{position:relative;z-index:1;width:100%;height:auto;display:block;
+  filter:drop-shadow(0 34px 40px rgba(0,0,0,.55))}
+/* piso: elipse tenue bajo la montaña */
+.peak-media::after{content:"";position:absolute;z-index:0;left:50%;bottom:2%;width:82%;height:12%;
+  transform:translateX(-50%);border-radius:50%;
+  background:radial-gradient(ellipse,rgba(56,189,248,.28),transparent 70%);filter:blur(14px)}
+/* foco de luz: sigue el pilar activo (color + altura) */
+@property --glowc{syntax:'<color>';inherits:true;initial-value:#38bdf8}
+@property --glowy{syntax:'<percentage>';inherits:true;initial-value:36%}
+.peak-glow{position:absolute;z-index:0;left:58%;top:var(--glowy);width:135%;aspect-ratio:1;
+  transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;
+  background:radial-gradient(closest-side,var(--glowc),transparent 66%);
+  opacity:.6;filter:blur(26px);
+  transition:--glowc .7s var(--ease),--glowy .7s var(--ease);
+  animation:glowbreath 6s ease-in-out infinite}
+@keyframes glowbreath{0%,100%{opacity:.48}50%{opacity:.72}}
+.peak-media[data-active="1"]{--glowc:#2f6bff;--glowy:66%}
+.peak-media[data-active="2"]{--glowc:#3b82f6;--glowy:52%}
+.peak-media[data-active="3"]{--glowc:#38bdf8;--glowy:39%}
+.peak-media[data-active="4"]{--glowc:#f97316;--glowy:27%}
+@media(prefers-reduced-motion:reduce){.peak-glow{animation:none}}
 /* acordeón de pilares */
 .method-acc{display:grid;gap:12px}
 .ma-item{border-radius:var(--r-md);overflow:hidden;background:var(--glass);
@@ -476,7 +484,6 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset
   .nav-links,.nav-cta{display:none}
   .burger{display:flex}
   .cards,.v-cards,.mvv-grid{grid-template-columns:1fr}
-  .peak-num{width:26px;height:26px;font-size:.72rem;border-radius:8px}
   .mc-1{left:0}.mc-2{right:0}
   .cta-panel{padding:60px 24px}
   .foot-grid{grid-template-columns:1fr}
@@ -772,9 +779,10 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset
       </div>
     </div>
 
-    <!-- Montaña (a un costado, con pelota que rebota) -->
+    <!-- Montaña (a un costado, con foco vivo y pelota que rebota) -->
     <div class="peak-right reveal" data-d="1">
-      <div class="peak-media">
+      <div class="peak-media" data-active="1">
+        <span class="peak-glow" aria-hidden="true"></span>
         <!-- TU IMAGEN: assets/img/metodo.png (prueba .png y .jpg) -->
         <img class="peak-img" src="assets/img/metodo.png" alt="Ruta de crecimiento Hefzi-bá"
              onerror="if(this.src.endsWith('.png'))this.src=this.src.slice(0,-4)+'.jpg'">
@@ -782,11 +790,6 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset
         <span class="peak-trail t2" aria-hidden="true"></span>
         <span class="peak-trail t1" aria-hidden="true"></span>
         <span class="peak-ball" aria-hidden="true"></span>
-        <!-- números sobre los escalones -->
-        <span class="peak-num" style="--x:76%;--y:63%" data-b="1">01</span>
-        <span class="peak-num" style="--x:70%;--y:49%" data-b="2">02</span>
-        <span class="peak-num" style="--x:61%;--y:35%" data-b="3">03</span>
-        <span class="peak-num" style="--x:54%;--y:23%" data-b="4">04</span>
       </div>
     </div>
   </div>
@@ -1201,7 +1204,8 @@ document.querySelectorAll(".faq-item").forEach(function(item){
   });
 });
 
-/* Acordeón del método (pilares) */
+/* Acordeón del método (pilares) + foco de la montaña sincronizado */
+var peakMedia = document.querySelector(".peak-media");
 document.querySelectorAll(".ma-item").forEach(function(item){
   var q = item.querySelector(".ma-q");
   q.addEventListener("click", function(){
@@ -1210,7 +1214,10 @@ document.querySelectorAll(".ma-item").forEach(function(item){
       o.setAttribute("data-open","0");
       o.querySelector(".ma-q").setAttribute("aria-expanded","false");
     });
-    if(!open){ item.setAttribute("data-open","1"); q.setAttribute("aria-expanded","true"); }
+    if(!open){
+      item.setAttribute("data-open","1"); q.setAttribute("aria-expanded","true");
+      if(peakMedia) peakMedia.setAttribute("data-active", item.getAttribute("data-b"));
+    }
   });
 });
 })();
